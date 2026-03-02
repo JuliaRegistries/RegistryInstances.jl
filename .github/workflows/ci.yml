@@ -1,8 +1,6 @@
 name: CI
 on:
   pull_request:
-    branches:
-      - master
   push:
     branches:
       - master
@@ -21,20 +19,23 @@ jobs:
       matrix:
         version:
           - '1.6'
+          - '1.7'
+          - '1.8'
+          - '1.9'
+          - '1.10'
+          - '1.11'
+          # - '1.12'
           - '1'
           - 'nightly'
         os:
           - ubuntu-latest
-        arch:
-          - x64
     steps:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - uses: julia-actions/setup-julia@v1
+      - uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.version }}
-          arch: ${{ matrix.arch }}
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
       - uses: julia-actions/julia-processcoverage@v1
